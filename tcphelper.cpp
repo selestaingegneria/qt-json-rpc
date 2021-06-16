@@ -8,8 +8,8 @@ using namespace JsonRPC;
 
 TcpHelper::TcpHelper(QObject *parent) :
     QObject(parent),
-    peer(NULL),
-    socket(NULL),
+    peer(nullptr),
+    socket(nullptr),
     nextMessageSize(0)
 {
 }
@@ -22,21 +22,18 @@ bool TcpHelper::setSocket(QTcpSocket *socket)
     if (socket && socket->state() == QAbstractSocket::ConnectedState) {
         socket->setParent(this);
 
-        connect(socket, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
-        connect(socket, SIGNAL(disconnected()), this, SLOT(onDisconnected()));
+        connect(socket, &QTcpSocket::readyRead, this, &TcpHelper::onReadyRead);
+        connect(socket, &QTcpSocket::disconnected, this, &TcpHelper::onDisconnected);
 
 
         peer = new Peer(this);
 
-        connect(peer, SIGNAL(readyRequestMessage(QByteArray)),
-                this, SLOT(onReadyMessage(QByteArray)));
-        connect(peer, SIGNAL(readyResponseMessage(QByteArray)),
-                this, SLOT(onReadyMessage(QByteArray)));
+        connect(peer, &Peer::readyRequestMessage, this, &TcpHelper::onReadyMessage);
+        connect(peer, &Peer::readyResponseMessage, this, &TcpHelper::onReadyMessage);
 
-        connect(peer, SIGNAL(readyResponse(QVariant,QVariant)),
-                this, SIGNAL(readyResponse(QVariant,QVariant)));
-        connect(peer, SIGNAL(requestError(int,QString,QVariant,QVariant)),
-                this, SIGNAL(requestError(int,QString,QVariant,QVariant)));
+        connect(peer, &Peer::readyResponse, this, &TcpHelper::readyResponse);
+        connect(peer, &Peer::requestError, this, &TcpHelper::requestError);
+
         connect(peer,
                 SIGNAL(readyRequest(QSharedPointer<JsonRPC::ResponseHandler>)),
                 this,
@@ -100,7 +97,7 @@ void TcpHelper::onDisconnected()
 {
     // clear peer data
     peer->deleteLater();
-    peer = NULL;
+    peer = nullptr;
 
     // clear buffer data
     buffer.clear();
@@ -109,7 +106,7 @@ void TcpHelper::onDisconnected()
     // clear socket data
     socket->disconnect();
     socket->deleteLater();
-    socket = NULL;
+    socket = nullptr;
 
     emit disconnected();
 }

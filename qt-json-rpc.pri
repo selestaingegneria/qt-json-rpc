@@ -1,9 +1,8 @@
 QT += network
-INCLUDEPATH += $$PWD/ $$PWD/3rdparty/
+QT -= gui
 
-# qt-json library
-HEADERS += $$PWD/3rdparty/qt-json/json.h
-SOURCES += $$PWD/3rdparty/qt-json/json.cpp
+CONFIG += console c++11
+CONFIG -= app_bundle
 
 HEADERS += $$PWD/error.h \
         $$PWD/httphelper.h \
@@ -16,3 +15,8 @@ SOURCES += $$PWD/error.cpp \
         $$PWD/peer.cpp \
         $$PWD/responsehandler.cpp \
         $$PWD/tcphelper.cpp
+
+include($$PWD/3rdparty/qt-json/qt-json.pri)
+
+INCLUDEPATH += $$PWD \
+    $$PWD/3rdparty

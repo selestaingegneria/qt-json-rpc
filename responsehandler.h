@@ -19,7 +19,7 @@ public:
       Creates a ResponseHandler that will use \param peer
       when responding some message.
       */
-    explicit ResponseHandler(Peer *peer = 0);
+    explicit ResponseHandler(Peer *peer = nullptr);
 
     /*! method getter.
       @return a string containing the method name

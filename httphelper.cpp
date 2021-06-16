@@ -13,15 +13,11 @@ HttpHelper::HttpHelper(QObject *parent) :
     peer(new Peer(this)),
     httpClient(new QNetworkAccessManager(this))
 {
-    connect(peer, SIGNAL(readyRequestMessage(QByteArray)),
-            this, SLOT(onReadyRequestMessage(QByteArray)));
-    connect(peer, SIGNAL(readyResponse(QVariant,QVariant)),
-            this, SIGNAL(readyResponse(QVariant,QVariant)));
-    connect(peer, SIGNAL(requestError(int,QString,QVariant,QVariant)),
-            this, SIGNAL(requestError(int,QString,QVariant,QVariant)));
+    connect(peer, &Peer::readyRequestMessage, this, &HttpHelper::onReadyRequestMessage);
+    connect(peer, &Peer::readyResponse, this, &HttpHelper::readyResponse);
+    connect(peer, &Peer::requestError, this, &HttpHelper::requestError);
 
-    connect(httpClient, SIGNAL(finished(QNetworkReply*)),
-            this, SLOT(replyFinished(QNetworkReply*)));
+    connect(httpClient, &QNetworkAccessManager::finished, this, &HttpHelper::replyFinished);
 }
 
 QUrl HttpHelper::url() const
@@ -56,7 +52,7 @@ void HttpHelper::replyFinished(QNetworkReply *reply)
 
     if (reply->error() != QNetworkReply::NoError) {
         bool ok;
-        QtJson::Json::parse(QString::fromUtf8(content), ok);
+        QtJson::parse(QString::fromUtf8(content), ok);
 
         if (!ok) {
             emit error(reply->error());

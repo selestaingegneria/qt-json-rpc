@@ -19,7 +19,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow),
     peer(new Peer(this)),
     serverSocket(new QTcpServer(this)),
-    socket(NULL),
+    socket(nullptr),
     clientSocket(new QTcpSocket(this)),
     clientMessageSize(0)
 {
@@ -145,7 +145,7 @@ void MainWindow::onDisconnected()
 {
     qDebug("disconnected");
     socket->deleteLater();
-    socket = NULL;
+    socket = nullptr;
 }
 
 void MainWindow::onButtonClick()

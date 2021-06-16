@@ -101,7 +101,7 @@ bool ResponseHandler::isNull() const
 void ResponseHandler::response(const QVariant &result)
 {
     if (!m_hasId)
-        peer = NULL;
+        peer = nullptr;
 
     if (!peer)
         return;
@@ -116,13 +116,13 @@ void ResponseHandler::response(const QVariant &result)
 
     // doing this will avoid more than one response
     // per request
-    peer = NULL;
+    peer = nullptr;
 }
 
 void ResponseHandler::error(const JsonRPC::Error &error)
 {
     if (!m_hasId)
-        peer = NULL;
+        peer = nullptr;
 
     if (!peer)
         return;
@@ -135,5 +135,5 @@ void ResponseHandler::error(const JsonRPC::Error &error)
 
     // doing this will avoid more than one response
     // per request
-    peer = NULL;
+    peer = nullptr;
 }

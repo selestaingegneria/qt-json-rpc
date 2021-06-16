@@ -21,7 +21,7 @@ public:
     /*!
       Constructs an object with parent object \param parent.
       */
-    Peer(QObject *parent = NULL);
+    Peer(QObject *parent = nullptr);
 
 signals:
     /*!

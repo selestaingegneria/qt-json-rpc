@@ -26,7 +26,7 @@ class TcpHelper : public QObject
 {
     Q_OBJECT
 public:
-    explicit TcpHelper(QObject *parent = 0);
+    explicit TcpHelper(QObject *parent = nullptr);
 
     /*! Sets the socket used be in the communication.
       \param socket must be in connected state.
